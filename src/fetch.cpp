@@ -353,72 +353,77 @@ string getPackages()
 
 string getColor(string line)
 {
-    string color, colorStr;
-    colorStr = line.substr(0, line.find(" ");
-    switch (colorStr){
-        case "RED":
-            color = RED;
-            break;
-        case "BLACK" :
-            color = BLACK;
-            break;
-        case "GREEN" :
-            color = GREEN;
-            break;
-        case "YELLOW":
-            color = YELLOW;
-            break;
-        case "BLUE" :
-            color = BLUE;
-            break;
-        case "MAGENTA" :
-            color = MAGENTA;
-            break;
-        case "CYAN":
-            color = CYAN;
-            break;
-        case "WHITE" :
-            color = WHITE;
-            break;
-        case "BBLACK" :
-            color = BBLACK;
-            break; 
-        case "BGRAY":
-            color = BGRAY;
-            break;
-        case "BRED" :
-            color = BRED;
-            break;
-        case "BGREEN":
-            color = BGREEN;
-            break;
-        case "BYELLOW" :
-            color = BYELLOW;
-            break;
-        case "BBLUE" :
-            color = BBLUE;
-            break; 
-        case "BMAGENTA":
-            color = BMAGENTA;
-            break;
-        case "BCYAN" :
-            color = BCYAN;
-            break;
-        case "BWHITE":
-            color = BWHITE;
-            break;
-        case "BMAGENTA" :
-            color = BMAGENTA;
-            break;
-        case "BCYAN" :
-            color = BCYAN;
-            break; 
-        case "BWHITE":
-            color = BWHITE;
-            break; 
-
+    string color;
+    if (line.substr(0, line.find(" ")) == "RED")
+    {
+        color = RED;
     }
-     return color;
+    else if (line.substr(0, line.find(" ")) == "BLACK")
+    {
+        color = BLACK;
+    }
+    else if (line.substr(0, line.find(" ")) == "GREEN")
+    {
+        color = GREEN;
+    }
+    else if (line.substr(0, line.find(" ")) == "YELLOW")
+    {
+        color = YELLOW;
+    }
+    else if (line.substr(0, line.find(" ")) == "BLUE")
+    {
+        color = BLUE;
+    }
+    else if (line.substr(0, line.find(" ")) == "MAGENTA")
+    {
+        color = MAGENTA;
+    }
+    else if (line.substr(0, line.find(" ")) == "CYAN")
+    {
+        color = CYAN;
+    }
+    else if (line.substr(0, line.find(" ")) == "WHITE")
+    {
+        color = WHITE;
+    }
+    else if (line.substr(0, line.find(" ")) == "BBLACK")
+    {
+        color = BBLACK;
+    }
+    else if (line.substr(0, line.find(" ")) == "BGRAY")
+    {
+        color = BGRAY;
+    }
+    else if (line.substr(0, line.find(" ")) == "BRED")
+    {
+        color = BRED;
+    }
+    else if (line.substr(0, line.find(" ")) == "BGREEN")
+    {
+        color = BGREEN;
+    }
+    else if (line.substr(0, line.find(" ")) == "BYELLOW")
+    {
+        color = BYELLOW;
+    }
+    else if (line.substr(0, line.find(" ")) == "BBLUE")
+    {
+        color = BBLUE;
+    }
+    else if (line.substr(0, line.find(" ")) == "BMAGENTA")
+    {
+        color = BMAGENTA;
+    }
+    else if (line.substr(0, line.find(" ")) == "BCYAN")
+    {
+        color = BCYAN;
+    }
+    else if (line.substr(0, line.find(" ")) == "BWHITE")
+    {
+        color = BWHITE;
+    }
+
+    return color;
 }
 
 void print_process(string art)
