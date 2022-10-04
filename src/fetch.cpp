@@ -106,7 +106,7 @@ string getUpTime(string path)
 
     getline(fptr, time);
     time = time.substr(0, time.find(" "));
-
+cout<<"1"<<endl;
     int m = stoi(time) / 60;
     int h = m / 60;
     int d = h / 24;
@@ -138,11 +138,12 @@ string getRAM(string path)
     {
         getline(fptr, line);
         sub = line.substr(0, line.find(":"));
+        
         if (sub == "MemTotal")
         {
             total = line;
         }
-        if (sub == "MemAvailable")
+        if (sub == "MemAvailable" || sub == "MemFree")
         {
             free = line;
         }
@@ -151,7 +152,7 @@ string getRAM(string path)
             shmem = line;
             break;
         }
-    }
+    } 
     int i;
     for (i = 0; i < total.size(); i++)
     {
@@ -182,9 +183,11 @@ string getRAM(string path)
 
     shmem = shmem.substr(i);
     shmem = shmem.substr(0, shmem.find(" "));
-
+cout<<"2"<<endl;
     int memTotal = stoi(total);
+    cout<<"3"<<free<<endl;
     int memFree = stoi(free);
+    cout<<"4"<<endl;
     int memAvail = (memTotal - memFree) - stoi(shmem);
 
     return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) + "MiB";
@@ -211,8 +214,13 @@ string getSHELL(string path)
 }
 
 string getDE()
-{
-    return getenv("XDG_CURRENT_DESKTOP");
+{   
+    try{
+        return getenv("XDG_CURRENT_DESKTOP");
+    } 
+    catch(const std::exception& e){
+        return "No Desktop Environment Installed";
+    }
 }
 
 string getRES(string path)
@@ -264,7 +272,8 @@ int getCPUtemp(string path)
     fstream fptr;
     fptr.open(path, ios::in);
     string temp;
-    getline(fptr, temp);
+    getline(fptr, temp); 
+    
     return stoi(temp);
 }
 
@@ -353,72 +362,73 @@ string getPackages()
 
 string getColor(string line)
 {
-    string color;
-    if (line.substr(0, line.find(" ")) == "RED")
+    string color,colorStr;
+    colorStr = line.substr(0, line.find(" "));
+    if (colorStr == "RED")
     {
         color = RED;
     }
-    else if (line.substr(0, line.find(" ")) == "BLACK")
+    else if (colorStr == "BLACK")
     {
         color = BLACK;
     }
-    else if (line.substr(0, line.find(" ")) == "GREEN")
+    else if (colorStr == "GREEN")
     {
         color = GREEN;
     }
-    else if (line.substr(0, line.find(" ")) == "YELLOW")
+    else if (colorStr == "YELLOW")
     {
         color = YELLOW;
     }
-    else if (line.substr(0, line.find(" ")) == "BLUE")
+    else if (colorStr == "BLUE")
     {
         color = BLUE;
     }
-    else if (line.substr(0, line.find(" ")) == "MAGENTA")
+    else if (colorStr == "MAGENTA")
     {
         color = MAGENTA;
     }
-    else if (line.substr(0, line.find(" ")) == "CYAN")
+    else if (colorStr == "CYAN")
     {
         color = CYAN;
     }
-    else if (line.substr(0, line.find(" ")) == "WHITE")
+    else if (colorStr == "WHITE")
     {
         color = WHITE;
     }
-    else if (line.substr(0, line.find(" ")) == "BBLACK")
+    else if (colorStr == "BBLACK")
     {
         color = BBLACK;
     }
-    else if (line.substr(0, line.find(" ")) == "BGRAY")
+    else if (colorStr == "BGRAY")
     {
         color = BGRAY;
     }
-    else if (line.substr(0, line.find(" ")) == "BRED")
+    else if (colorStr == "BRED")
     {
         color = BRED;
     }
-    else if (line.substr(0, line.find(" ")) == "BGREEN")
+    else if (colorStr == "BGREEN")
     {
         color = BGREEN;
     }
-    else if (line.substr(0, line.find(" ")) == "BYELLOW")
+    else if (colorStr == "BYELLOW")
     {
         color = BYELLOW;
     }
-    else if (line.substr(0, line.find(" ")) == "BBLUE")
+    else if (colorStr == "BBLUE")
     {
         color = BBLUE;
     }
-    else if (line.substr(0, line.find(" ")) == "BMAGENTA")
+    else if (colorStr == "BMAGENTA")
     {
         color = BMAGENTA;
     }
-    else if (line.substr(0, line.find(" ")) == "BCYAN")
+    else if (colorStr == "BCYAN")
     {
         color = BCYAN;
     }
-    else if (line.substr(0, line.find(" ")) == "BWHITE")
+    else if (colorStr == "BWHITE")
     {
         color = BWHITE;
     }
@@ -495,20 +505,27 @@ int main()
     cout << BRIGHT << GREEN << "shell : " << RESET << shell << endl;
     string DE = getDE();
     cout << BRIGHT << GREEN << "DE : " << RESET << DE << endl;
-    string res = getRES("/sys/class/graphics/fb0/modes");
-    cout << BRIGHT << GREEN << "Resolution : " << RESET << res << endl;
-    string theme = getTheme();
-    cout << BRIGHT << GREEN << "Theme : " << RESET << theme << endl;
-    string icon = getIcons();
-    cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
+    //string res = getRES("/sys/class/graphics/fb0/modes");
+    // cout << BRIGHT << GREEN << "Resolution : " << RESET << res << endl;
+    // string theme = getTheme();
+    // cout << BRIGHT << GREEN << "Theme : " << RESET << theme << endl;
+    // string icon = getIcons();
+    // cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
     string cpu = getCpu("/proc/cpuinfo");
     cout << BRIGHT << GREEN << "CPU : " << RESET << cpu << endl;
     int temp;
-    if (HOST.find("VirtualBox") == string::npos)
-    {
-        int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
-        cout << BRIGHT << GREEN << "CPU Temperature : " << RESET << float(temp / 1000.0) << " °C" << endl;
+    cout << BRIGHT << GREEN<< "CPU Temperature : "<< RESET;
+    try {
+        if (HOST.find("VirtualBox") == string::npos)
+        {
+            int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
+            cout << float(temp / 1000.0);
+        }
     }
+    catch(const std::exception& e){
+        cout << "cannot detect CPU temperature";
+    }
+    cout<< " °C" << endl;
     vector<string> gpu = getGPU();
     for (auto it : gpu)
     {
